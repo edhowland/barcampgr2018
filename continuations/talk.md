@@ -202,3 +202,89 @@ defn safe_fread(fname) {
   :result
 }
 ```
+
+
+### Delimited Continuations
+
+We would like to be able to compose our continuations in a larger expression.
+With unlimited continuations, this is much harder, requiring more plumbing.
+It would be nice if we could bound our continuation at some previous step
+
+Imagine our sandwich metaphor. What if we could turn our sandwich  into a Panini?
+
+```
+# Our new RPN example from before.
+100
+5
+3
+4
+*
++
+*
+
+# => 1700
+# Delimited:
+
+1000
+..........
+5
+----------
+3
+4
+*
+----------
++
+..........
+*
+```
+
+In the above example, our delimited continuation captures the computation
+between the dotted line and the dashed line, and then the dashed line and the dotted line.
+
+
+
+
+
+
+### One Shot continuations
+
+Usually called with 'call/1cc'.
+
+
+
+### Problems with continuations
+
+[An arguement against call/cc](http://okmij.org/ftp/continuations/against-callcc.html)
+
+- Memory leaks
+- Hard to implement generators, thread control and lazy streams
+
+
+### A simple implementation
+
+In Vish, we implement the callcc function like this:
+```
+
+defn callcc(l) {
+  l(_mkcontinuation(unwind_one(__frames()), :callcc))
+}
+```
+## Continuation Passing style 99 
+
+### Fibonacci example
+
+;; CPS ver of fib
+
+(define (fib-cps n k)
+  (cond
+    [(zero? n) (k 0 1)]
+    [(= n 1) (k 0 1)]
+    [else (fib-cps (sub1 n) (lambda (x y)
+                                (k y (+ x y))))]
+  )
+)
+
+(define (fib m) (fib-cps m (lambda (x y) (+ x y))))
+```
+
+
