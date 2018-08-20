@@ -271,6 +271,37 @@ defn callcc(l) {
 ```
 ## Continuation Passing style 99 
 
+### Direct style expression functions
+
+### Pipelined version
+
+### CP Style version
+
+### Used in some callback schemes
+
+We can provide more than one continuation function. In the case of either
+success or failure, we can supply both things to do after the function returns.
+
+```
+// JavaScript example
+function fetch(url, on_success, on_error) {
+
+}
+```
+
+
+### Hyper-realized example in Scheme
+
+In the following example, from Wikipedia, we show, first a direct style
+Pythogorean solver, then it in CPS mode. The CPS version shows every function,
+including primitive functions and special forms, are coded in CPS form.
+
+```
+;; Direct style
+
+;; CPS version
+```
+
 ### Fibonacci example
 
 ;; CPS ver of fib
@@ -329,4 +360,5 @@ sys  0m0.150s
 ## Links
 
 [Continuation Passing Style: Wikipedia](https://en.wikipedia.org/wiki/Continuation-passing_style)
+[Article on CPS in JavaScript](http://matt.might.net/articles/by-example-continuation-passing-style/)
 
