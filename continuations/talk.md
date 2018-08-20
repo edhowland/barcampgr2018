@@ -359,6 +359,12 @@ sys  0m0.150s
 
 ## Links
 
+
+[Section 3.3 Continuations and 3.4 Continuation Passing Style in Dr. Kent Dybig's book](https://scheme.com/tspl4/further.html#./further:h4)
+[Chapter 5: Control structures](https://scheme.com/tspl4/control.html#g104)
 [Continuation Passing Style: Wikipedia](https://en.wikipedia.org/wiki/Continuation-passing_style)
 [Article on CPS in JavaScript](http://matt.might.net/articles/by-example-continuation-passing-style/)
+[Advantages of CPS with examples in pattern matching: StackOverflow.com](https://stackoverflow.com/questions/8544127/why-continuation-passing-style)
+
+
 
