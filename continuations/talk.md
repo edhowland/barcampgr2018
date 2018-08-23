@@ -1,3 +1,5 @@
+[slide_2](slides/slide_2.md)
+
 # Deep Dive into Continuations and CPS
 
 ## What are continuations?
@@ -22,6 +24,8 @@ Say you want to make a sandwich.
 
 
 
+
+[slide_3](slides/slide_3.md)
 
 ### First class continuations via call/cc or callcc.
 
@@ -59,9 +63,10 @@ But we can get the effect we want:
 >> x
 => "Hello yourself"
 
-````
+```
 
 
+[slide_4](slides/slide_4.md)
 #### First caveat
 
 We cannot use the result of invoking the continuation in further expressions
@@ -74,7 +79,9 @@ functionality is Delimited Continuations. More on that later.
 
 Why not? Can you guess?
 
+1
 
+[slide_5](slides/slide_5.md)
 ### How does this work?
 
 Let's say you have this canonical expression:
@@ -92,10 +99,12 @@ Let's say you have this canonical expression:
 
 ```
 
-With a continuation:
 
+[slide_6](slides/slide_6.md)
+With a continuation:
+011
 ```
-# Ruby
+# 0Ruby
 
 >> 5 + callcc {|k| 3 * 4}
 => 17
