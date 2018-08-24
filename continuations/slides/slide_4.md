@@ -1,4 +1,4 @@
-[slide_4](slides/slide_4.md)
+[slide_4](slide_4.md)
 #### First caveat
 
 We cannot use the result of invoking the continuation in further expressions

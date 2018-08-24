@@ -1,4 +1,4 @@
-[slide_13](slides/slide_3.md)
+[slide_13](slide_3.md)
 
 ### Timing statistics
 

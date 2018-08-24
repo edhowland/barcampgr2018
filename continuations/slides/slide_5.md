@@ -1,4 +1,4 @@
-[slide_5](slides/slide_5.md)
+[slide_5](slide_5.md)
 ### How does this work?
 
 Let's say you have this canonical expression:

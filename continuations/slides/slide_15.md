@@ -1,4 +1,4 @@
-[slide_15](slides/slide_5.md)
+[slide_15](slide_5.md)
 ### The CPS version
 
 ```

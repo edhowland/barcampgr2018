@@ -1,4 +1,4 @@
-[slide_16](slides/slide_16.md)
+[slide_16](slide_16.md)
 
 ### Slip in our call/cc in this chain:
 ```

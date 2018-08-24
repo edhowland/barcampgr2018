@@ -1,4 +1,4 @@
-[slide_3](slides/slide_3.md)
+[slide_3](slide_3.md)
 
 ### First class continuations via call/cc or callcc.
 

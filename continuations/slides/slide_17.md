@@ -1,4 +1,4 @@
-[slide_17](slides/slide_17.md)
+[slide_17](slide_17.md)
 
 ### The 4 rules for CPS transformation
 

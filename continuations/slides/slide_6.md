@@ -1,4 +1,4 @@
-[slide_6](slides/slide_6.md)
+[slide_6](slide_6.md)
 With a continuation:
 
 ```

@@ -1,4 +1,4 @@
-[slide_12](slides/slide_12.md)
+[slide_12](slide_12.md)
 
 
 ### Direct version

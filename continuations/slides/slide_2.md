@@ -1,4 +1,4 @@
-[slide_2](slides/slide_2.md)
+[slide_2](slide_2.md)
 
 # Deep Dive into Continuations and CPS
 

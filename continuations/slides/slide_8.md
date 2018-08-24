@@ -1,4 +1,4 @@
-[slide_8](slides/slide_8.md)
+[slide_8](slide_8.md)
 
 
 ### Actual use case: Exceptions

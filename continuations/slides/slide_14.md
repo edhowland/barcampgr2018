@@ -1,4 +1,4 @@
-[slide_4](slides/slide_4.md)
+[slide_4](slide_4.md)
 ## Bringing it all together
 
 If we have performed a CPS transform on our code, then we get call/cc for free.

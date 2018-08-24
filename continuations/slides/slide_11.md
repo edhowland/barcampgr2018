@@ -1,4 +1,4 @@
-[slide_11](slides/slide_11.md)
+[slide_11](slide_11.md)
 
 ## Continuation Passing style
 

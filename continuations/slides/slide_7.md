@@ -1,4 +1,4 @@
-[slide_7](slides/slide_7.md)
+[slide_7](slide_7.md)
 
 
 ### The RPN version

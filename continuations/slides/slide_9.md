@@ -1,4 +1,4 @@
-[slide_9](slides/slide_9.md)
+[slide_9](slide_9.md)
 
 ### Delimited Continuations
 

@@ -1,4 +1,4 @@
-[slide_10](slides/slide_10.md)
+[slide_10](slide_10.md)
 
 ### Problems with continuations
 
