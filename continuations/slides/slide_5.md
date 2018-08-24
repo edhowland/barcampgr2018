@@ -1,4 +1,7 @@
 [slide_6](slide_6.md)
+
+## Ruby canonical example
+
 With a continuation:
 
 ```
