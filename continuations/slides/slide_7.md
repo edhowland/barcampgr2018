@@ -1,48 +1,25 @@
-[slide_7](slide_7.md)
+[slide_8](slide_8.md)
 
 
-### The RPN version
+### Actual use case: Exceptions
 
-Let's translate the above into postfix notation: (I.e. Reverse Polish Notation:
-RPN or H.P. calculator style)
-```
-5
-3
-4
-*
-+
+We can apply continuations to the case of implementing an exception handler.
 
-=> 17
-```
-
-
-With a continuation graphically:
+Here is an example of a simple handler for a safe_fread function in Vish:
 
 ```
-5
-----------
-3
-4
-*
-----------
-+
-
-=> 17
+# safe_fread.vs - safe version of fread using continuations for exceptions
+defn safe_fread(fname) {
+  # guard exception handlers
+  nofile=except("No such file: %{:fname}")
+    noread=except("Cannot read file: %{:fname}")
+  result=callcc(->(k) {
+    fexist?(:fname) || k(nofile(callcc(->(cc) {:cc})))
+    freadable?(:fname) || k(noread(callcc(->(cc) {:cc})))
+    fread(:fname)
+  })
+  :result
+}
 ```
-
-
-The continuation is everything above and below the dashed lines:
-
-This is what the 'k' continuation captures:
-
-```
-5
-_
-+
-```
-
-The '_' above is the hole  into which we will plug the the parameter we pass to
-the call to 'k.call( _ )'
-
 
 

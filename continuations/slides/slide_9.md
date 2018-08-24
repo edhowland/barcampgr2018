@@ -1,46 +1,20 @@
-[slide_9](slide_9.md)
+[slide_10](slide_10.md)
 
-### Delimited Continuations
+### Problems with continuations
 
-We would like to be able to compose our continuations in a larger expression.
-With unlimited continuations, this is much harder, requiring more plumbing.
-It would be nice if we could bound our continuation at some previous step
+[An arguement against call/cc](http://okmij.org/ftp/continuations/against-callcc.html)
 
-Imagine our sandwich metaphor. What if we could turn our sandwich  into a Panini?
+- Memory leaks
+- Hard to implement generators, thread control and lazy streams
 
-```
-# Our new RPN example from before.
-100
-5
-3
-4
-*
-+
-*
 
-# => 1700
-# Delimited:
+### A simple implementation
 
-1000
-..........
-5
-----------
-3
-4
-*
-----------
-+
-..........
-*
+In Vish, we implement the callcc function like this:
 ```
 
-In the above example, our delimited continuation captures the computation
-between the dotted line and the dashed line, and then the dashed line and the dotted line.
-
-
-
-
-
-
-
+defn callcc(l) {
+  l(_mkcontinuation(unwind_one(__frames()), :callcc))
+}
+```
 

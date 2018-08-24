@@ -1,41 +1,15 @@
-[slide_3](slide_3.md)
+[slide_4](slide_4.md)
+#### First caveat
 
-### First class continuations via call/cc or callcc.
+We cannot use the result of invoking the continuation in further expressions
+as illustrated by the first example of "x = $k.call('yourself')"
 
-One line example.
+The reason is these are called Unlimited Continuations. What we need for this
+functionality is Delimited Continuations. More on that later.
 
-This code is in Ruby, but the language does not matter.
+#### Second caveat: Do NOT type this code into a Ruby file and try to run it.
 
-```
-$ irb -W0 -r continuation
->> "Hello #{callcc {|k| $k = k; 'World'}}"
-=> "Hello World"
->> 
-?> $k
-=> #<Continuation:0x007f846e916488>
->> $k.call('Sailor')
-=> "Hello Sailor"
->> $k.call('George')
-=> "Hello George"
->> $k.call('Gracie')
-=> "Hello Gracie"
->> x=$k.call('yourself')
-=> "Hello yourself"
->> x
-=> nil
-```
+Why not? Can you guess?
 
-But we can get the effect we want:
-
-```
-
->> x = "Hello #{callcc {|k| $k=k; 'World'}}"
-=> "Hello World"
->> $k.call('yourself')
-=> "Hello yourself"
->> x
-=> "Hello yourself"
-
-```
-
+1
 

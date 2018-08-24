@@ -1,24 +1,23 @@
-[slide_4](slide_4.md)
-## Bringing it all together
-
-If we have performed a CPS transform on our code, then we get call/cc for free.
+[slide_15](slide_5.md)
+### The CPS version
 
 ```
-# First, Funkify the previous sub-expressions
-defn f(n) { 100 * :n }
-defn g(n) { 5 + :n }
-defn h(x, y) { :x * :y }
+# First, create CPS-ified versions of direct sub-expressions functions
+defn f(n, k) { k(100 * :n) }
+defn g(n, k) { k(5 + :n) }
+defn h(x, y, k) { k(:x * :y) }
 
-# Now compose our full expression:
-defn chain1(x, y) {
-  f(g(h(:x, :y)))
+# Also, create our identity function for testing and to get the ball rolling
+defn id(x) { :x }
+
+# Now our CPS-ified version
+defn chain3(x, y) {
+  h(:x, :y, ->(z) {
+  g(:z, ->(x2) {
+  f(:x2, :id)
+  })})
 }
 
-
-# Next, let's unroll the call stack with a pipeline
-defn chain2(x, y) {
-  h(:x, :y) | g() | f()
-}
 
 ```
 

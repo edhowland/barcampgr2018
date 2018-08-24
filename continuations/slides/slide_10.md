@@ -1,20 +1,24 @@
-[slide_10](slide_10.md)
+[slide_11](slide_11.md)
 
-### Problems with continuations
-
-[An arguement against call/cc](http://okmij.org/ftp/continuations/against-callcc.html)
-
-- Memory leaks
-- Hard to implement generators, thread control and lazy streams
+## Continuation Passing style
 
 
-### A simple implementation
+### Fibonacci example
 
-In Vish, we implement the callcc function like this:
+```
+;; CPS ver of fib
+
+(define (fib-cps n k)
+  (cond
+    [(zero? n) (k 0 1)]
+    [(= n 1) (k 0 1)]
+    [else (fib-cps (sub1 n) (lambda (x y)
+                                (k y (+ x y))))]
+  )
+)
+
+(define (fib m) (fib-cps m (lambda (x y) (+ x y))))
 ```
 
-defn callcc(l) {
-  l(_mkcontinuation(unwind_one(__frames()), :callcc))
-}
-```
+
 

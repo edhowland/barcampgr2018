@@ -1,24 +1,17 @@
-[slide_11](slide_11.md)
-
-## Continuation Passing style
+[slide_12](slide_12.md)
 
 
-### Fibonacci example
+### Direct version
 
 ```
-;; CPS ver of fib
-
-(define (fib-cps n k)
+(define (fib n)
   (cond
-    [(zero? n) (k 0 1)]
-    [(= n 1) (k 0 1)]
-    [else (fib-cps (sub1 n) (lambda (x y)
-                                (k y (+ x y))))]
+    [(zero? n) 1]
+    [(eq? n 1) 1]
+    [else (+ (fib (- n 2)) (fib (- n 1)))]
   )
 )
 
-(define (fib m) (fib-cps m (lambda (x y) (+ x y))))
 ```
-
 
 

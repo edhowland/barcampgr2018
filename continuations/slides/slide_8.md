@@ -1,25 +1,46 @@
-[slide_8](slide_8.md)
+[slide_9](slide_9.md)
 
+### Delimited Continuations
 
-### Actual use case: Exceptions
+We would like to be able to compose our continuations in a larger expression.
+With unlimited continuations, this is much harder, requiring more plumbing.
+It would be nice if we could bound our continuation at some previous step
 
-We can apply continuations to the case of implementing an exception handler.
-
-Here is an example of a simple handler for a safe_fread function in Vish:
+Imagine our sandwich metaphor. What if we could turn our sandwich  into a Panini?
 
 ```
-# safe_fread.vs - safe version of fread using continuations for exceptions
-defn safe_fread(fname) {
-  # guard exception handlers
-  nofile=except("No such file: %{:fname}")
-    noread=except("Cannot read file: %{:fname}")
-  result=callcc(->(k) {
-    fexist?(:fname) || k(nofile(callcc(->(cc) {:cc})))
-    freadable?(:fname) || k(noread(callcc(->(cc) {:cc})))
-    fread(:fname)
-  })
-  :result
-}
+# Our new RPN example from before.
+100
+5
+3
+4
+*
++
+*
+
+# => 1700
+# Delimited:
+
+1000
+..........
+5
+----------
+3
+4
+*
+----------
++
+..........
+*
 ```
+
+In the above example, our delimited continuation captures the computation
+between the dotted line and the dashed line, and then the dashed line and the dotted line.
+
+
+
+
+
+
 
 

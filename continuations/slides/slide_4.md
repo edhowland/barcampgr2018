@@ -1,15 +1,19 @@
-[slide_4](slide_4.md)
-#### First caveat
+[slide_5](slide_5.md)
+### How does this work?
 
-We cannot use the result of invoking the continuation in further expressions
-as illustrated by the first example of "x = $k.call('yourself')"
+Let's say you have this canonical expression:
 
-The reason is these are called Unlimited Continuations. What we need for this
-functionality is Delimited Continuations. More on that later.
+```
+# Ruby:
 
-#### Second caveat: Do NOT type this code into a Ruby file and try to run it.
+>> 5 + 3 * 4
+=> 17
 
-Why not? Can you guess?
+;; Scheme version
 
-1
+> (+ 5 (* 3 4))
+17
+
+```
+
 

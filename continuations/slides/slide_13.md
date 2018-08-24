@@ -1,25 +1,24 @@
-[slide_13](slide_3.md)
+[slide_4](slide_4.md)
+## Bringing it all together
 
-### Timing statistics
+If we have performed a CPS transform on our code, then we get call/cc for free.
 
 ```
+# First, Funkify the previous sub-expressions
+defn f(n) { 100 * :n }
+defn g(n) { 5 + :n }
+defn h(x, y) { :x * :y }
 
-. time chez fib-cps.scm  fib-45.scm ;time chez fib-dir.scm  fib-45.scm 
-Chez Scheme Version 9.5
-Copyright 1984-2017 Cisco Systems, Inc.
+# Now compose our full expression:
+defn chain1(x, y) {
+  f(g(h(:x, :y)))
+}
 
-1836311903
-real  0m0.215s
-user  0m0.160s
-sys  0m0.041s
-Chez Scheme Version 9.5
-Copyright 1984-2017 Cisco Systems, Inc.
 
-1836311903
-real  0m16.742s
-user  0m16.372s
-sys  0m0.150s
-. 
+# Next, let's unroll the call stack with a pipeline
+defn chain2(x, y) {
+  h(:x, :y) | g() | f()
+}
 
 ```
 

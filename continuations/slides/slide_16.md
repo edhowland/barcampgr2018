@@ -1,27 +1,24 @@
-[slide_16](slide_16.md)
+[slide_17](slide_17.md)
 
-### Slip in our call/cc in this chain:
-```
-# create our call/cc fn
-defn callcc(l, k) { l(:k) }
-defn f(n, k) { k(100 * :n) }
-defn g(n, k) { k(5 + :n) }
-defn h(x, y, k) { k(:x * :y) }
+### The 4 rules for CPS transformation
 
-# Also, create our identity function for testing and to get the ball rolling
-defn id(x) { :x }
+1. Pass each function an extra parameter - cont.
+2. Whenever the function returns an expression that doesn't contain function calls, send that expression to the continuation cont instead.
+3. Whenever a function call occurs in a tail position, call the function with the same continuation - cont.
+4. Whenever a function call occurs in an operand (non-tail) position, instead perform this call in a new continuation 
 
-# set up our top-level variable
-kk=9
-# Now use callcc in our expression
-defn chain4(x, y) {
-  callcc(->(k) {
-  kk=:k
-  h(:x, :y, :k) }, ->(v) {
-  g(:v, ->(x2) {
-  f(:x2, :id)
-  })})
-}
-```
+
+
+## Links
+
+
+[Section 3.3 Continuations and 3.4 Continuation Passing Style in Dr. Kent Dybig's book](https://scheme.com/tspl4/further.html#./further:h4)
+[Chapter 5: Control structures](https://scheme.com/tspl4/control.html#g104)
+[Continuation Passing Style: Wikipedia](https://en.wikipedia.org/wiki/Continuation-passing_style)
+[Article on CPS in JavaScript](http://matt.might.net/articles/by-example-continuation-passing-style/)
+[Advantages of CPS with examples in pattern matching: StackOverflow.com](https://stackoverflow.com/questions/8544127/why-continuation-passing-style)
+[The 4 steps for CPS transformation](https://eli.thegreenplace.net/2017/on-recursion-continuations-and-trampolines/)
+
+
 
 
