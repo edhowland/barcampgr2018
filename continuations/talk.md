@@ -102,9 +102,9 @@ Let's say you have this canonical expression:
 
 [slide_6](slides/slide_6.md)
 With a continuation:
-011
+
 ```
-# 0Ruby
+# Ruby
 
 >> 5 + callcc {|k| 3 * 4}
 => 17
@@ -143,12 +143,14 @@ Let's save the continuation in $k:
 
 ```
 
+[slide_7](slides/slide_7.md)
+
 
 ### The RPN version
 
 Let's translate the above into postfix notation: (I.e. Reverse Polish Notation:
 RPN or H.P. calculator style)
-``
+```
 5
 3
 4
@@ -189,6 +191,7 @@ the call to 'k.call( _ )'
 
 
 
+[slide_8](slides/slide_8.md)
 
 
 ### Actual use case: Exceptions
@@ -212,6 +215,8 @@ defn safe_fread(fname) {
 }
 ```
 
+
+[slide_9](slides/slide_9.md)
 
 ### Delimited Continuations
 
@@ -255,11 +260,9 @@ between the dotted line and the dashed line, and then the dashed line and the do
 
 
 
-### One Shot continuations
-
-Usually called with 'call/1cc'.
 
 
+[slide_10](slides/slide_10.md)
 
 ### Problems with continuations
 
@@ -278,41 +281,15 @@ defn callcc(l) {
   l(_mkcontinuation(unwind_one(__frames()), :callcc))
 }
 ```
-## Continuation Passing style 99 
 
-### Direct style expression functions
+[slide_11](slides/slide_11.md)
 
-### Pipelined version
+## Continuation Passing style
 
-### CP Style version
-
-### Used in some callback schemes
-
-We can provide more than one continuation function. In the case of either
-success or failure, we can supply both things to do after the function returns.
-
-```
-// JavaScript example
-function fetch(url, on_success, on_error) {
-
-}
-```
-
-
-### Hyper-realized example in Scheme
-
-In the following example, from Wikipedia, we show, first a direct style
-Pythogorean solver, then it in CPS mode. The CPS version shows every function,
-including primitive functions and special forms, are coded in CPS form.
-
-```
-;; Direct style
-
-;; CPS version
-```
 
 ### Fibonacci example
 
+```
 ;; CPS ver of fib
 
 (define (fib-cps n k)
@@ -329,9 +306,12 @@ including primitive functions and special forms, are coded in CPS form.
 
 
 
+[slide_12](slides/slide_12.md)
 
 
 ### Direct version
+
+```
 (define (fib n)
   (cond
     [(zero? n) 1]
@@ -341,6 +321,9 @@ including primitive functions and special forms, are coded in CPS form.
 )
 
 ```
+
+
+[slide_13](slides/slide_3.md)
 
 ### Timing statistics
 
@@ -365,6 +348,7 @@ sys  0m0.150s
 
 ```
 
+[slide_4](slides/slide_4.md)
 ## Bringing it all together
 
 If we have performed a CPS transform on our code, then we get call/cc for free.
@@ -388,6 +372,7 @@ defn chain2(x, y) {
 
 ```
 
+[slide_15](slides/slide_5.md)
 ### The CPS version
 
 ```
@@ -409,6 +394,8 @@ defn chain3(x, y) {
 
 
 ```
+
+[slide_16](slides/slide_16.md)
 
 ### Slip in our call/cc in this chain:
 ```
@@ -434,6 +421,8 @@ defn chain4(x, y) {
 }
 ```
 
+
+[slide_17](slides/slide_17.md)
 
 ### The 4 rules for CPS transformation
 

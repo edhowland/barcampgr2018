@@ -1,0 +1,16 @@
+mv slide_aa slide_2.md
+mv slide_ab slide_3.md
+mv slide_ac slide_4.md
+mv slide_ad slide_5.md
+mv slide_ae slide_6.md
+mv slide_af slide_7.md
+mv slide_ag slide_8.md
+mv slide_ah slide_9.md
+mv slide_ai slide_10.md
+mv slide_aj slide_11.md
+mv slide_ak slide_12.md
+mv slide_al slide_13.md
+mv slide_am slide_14.md
+mv slide_an slide_15.md
+mv slide_ao slide_16.md
+mv slide_ap slide_17.md
