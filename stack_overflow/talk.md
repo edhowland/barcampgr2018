@@ -43,4 +43,83 @@ rely on the C language stack. E.g. Ruby, Javascript and C Python.
 
 Here is a simple Ruby script to get the maximum stack depth.
 
+```
+#!/usr/bin/env ruby
+# stack_limit.rb - estimate the max stack depth
+
+def eternal &blk
+  yield 1
+  eternal(&blk)
+end
+
+limit = 0
+begin
+  eternal {|x| limit += x }
+rescue SystemStackError => e
+  puts 'In SystemStackError'
+  puts 'the maximum depth is:'
+    puts "#{e.backtrace.length}"
+
+rescue => err
+  puts "some other error occured: #{err.class.name}"
+end
+
+
+puts "limit: #{limit}"
+
+```
+
+
+
+Running this on my MacBook Air:
+
+```
+
+. ruby -v
+ruby 2.4.1p111 (2017-03-22 revision 58053) [x86_64-darwin14]
+. ruby stack_limit.rb 
+In SystemStackError
+the maximum depth is:
+11914
+limit: 11912
+```
+
+So, it seems that my maximum limit is around 11K. I can get a bit more by dropping the 
+parameter: blk.
+
+As far as I know, Javascript might be around 20K.
+
+Whatever, these are hard limits. In our data intensive world, one can imagine
+running up against these borders.
+
+
+## Approaches to avoiding reaching stack limits
+
+You can always rewrite recursive functions in imperative fashion using loop
+iterations instead. This may get ugly. Here, I am going to avoid any examples to
+spare you horror of having to read them.
+
+### Tail position
+
+If your language supports tail call optimization, you can rewrite your recursive code to
+take advantage of that.
+
+The general approach is to make sure to place the the recursive function call in
+the final slot of your function body; the "tail" position.
+Language runtimes that utilize tail call optimization will reuse the existing
+stack frame and just perform essentially a jump instruction back to top of
+the function body.
+
+Let's see some code:
+
+This example is written in Scheme, likely to be the first language to employ tail call optimization.
+
+```
+;; Factorial naive style
+(define (fact n)
+  (if (zero? n) 1
+    (fact (sub1 n))))
+```
+
+
 
