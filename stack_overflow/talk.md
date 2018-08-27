@@ -207,5 +207,17 @@ The base case of the conditional is where we fire off the entire chain of lambda
 
 ### The CPS version of fact:
 
-If we supply 5 to our CPS-ified factorial function, we will get the following chain of lambdas built up:
+The above code produces a nested set of anonymous lambda functions waiting to be called.
+The important point to remember is that during the first rounds of the recursive calls,
+we are storing the remaing work to do in these lambdas which are stored on the heap,
+not on the stack. Our language runtime ensures that we have tail code optimization so only a single
+stack frame will be created.
+
+### But aren't you just delaying the enevatable?
+
+You might have caught that once the base condition is reached, and we fire off the entire chain
+of lambda applications, do not they all just cause more stack frames to be pushed?
+
+Well, maybe. For this reason, we must also ensure that the call to the passed
+in 'k' continuation function is also in the tail position to take advantage of TCO as well.
 
