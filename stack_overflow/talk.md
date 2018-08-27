@@ -146,7 +146,6 @@ This parameter will act as an accumulator.
 Next, we create a wrapper function to initialize the whole ball rolling.
 
 ```
-
 ;; Accumulator passing style : APS
 (define (fact-aps n acc)
   (if (zero? n) acc
@@ -155,7 +154,6 @@ Next, we create a wrapper function to initialize the whole ball rolling.
 ;;; Our driver wrapper function: fact
 (define (fact n)
   (fact-aps n 1))
-
 ```
 
 
@@ -168,31 +166,46 @@ In each call to fact-aps, the language runtime, Scheme in this case, will reuse 
 stack frame created in the fact driver function.
 The effect of this move is to essentially change a recursive intensivefunction into a iterative one.
 
-## Approach #2: Continuation Passing Style: CPS
+
+
+## Approach #2: Continuation Passing Style
+
 
 Sometimes, it is not easy to use a single numeric value, or even a growing cons cell list
 for an an accumulator. We might have to do additional work to compute our final answer.
 
-```
-;; Accumulator passing style : APS
-(define (fact-aps n acc)
-  (if (zero? n) acc
-  (fact-aps (sub1 n) (* n acc))))
-(define (fact n)
-  (fact-aps n 1))
+Another technique is to provide a continuation function as the additional parameter
+instead of an accumulator. A continuation is just the remaining work to be done.
+
+The recipe to do this:
+
+1.  Provide an additional parameter: 'k' that is the function to hold the continuation.
+2. In the driver outer function, pass the identity function that will be the final step.
+3. In the base case of the conditional, just call the continuation function 'k' with the final value.
+4. In any recursive legs of the conditional, call the recursive function (now in the tail position)
+5. For the 'k' parameter, create a new lambda function that performs the work and passes the result to the 'k' continuational passed in.
+
 
 ```
-
 ;; fact-cps - Continuation passing style
 (define (fact-cps n k)
   (if (zero? n) (k 1)
   (fact-cps (sub1 n) (lambda (v) (* n (k v))))))
 
-
-
+;;; Our driver function
+;;; We pass an initial identity lambda as the first continuation.
 (define (fact n)
   (fact-cps n (lambda (x) x)))
-
 ```
 
+In this way, we are threading the reamining work to be done by wrapping new lambdas around the call to the passed in previous lambda.
+The inner most lambda is (usually) just the identity function, just returning
+its own parameter.
+
+The base case of the conditional is where we fire off the entire chain of lambda applications.
+
+
+### The CPS version of fact:
+
+If we supply 5 to our CPS-ified factorial function, we will get the following chain of lambdas built up:
 
