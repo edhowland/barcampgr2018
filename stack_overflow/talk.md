@@ -236,6 +236,130 @@ Well, maybe. For this reason, we must also ensure that the call to the passed
 in 'k' continuation function is also in the tail position to take advantage of TCO as well.
 
 
+## What to do if your favorite language does not support TCO
+
+There is an additional technique called the trampoline method that you might be able to use.
+It is similar to the continuation passing scheme, CPS, but uses another type of driver function.
+
+In this technique, you create a function with an infinite loop that will break out
+under the passed in function returning a non-function. I know this sounds crazy, but it is really quite simple.
+
+First, let's review our TCO stuff in the language like Ruby which has optional TCO.
+
+First, our direct style factorial:
+
+```
+
+#!/usr/bin/env ruby
+# fact-dir.rb - Factorial Direct style
+
+def fact n
+  if n.zero?
+    1
+  else
+    n * fact(n - 1)
+  end
+end
+```
+
+
+Now, our CPS version
+
+```
+#!/usr/bin/env ruby
+# fact-cps - Factorial Continuation Passing Style: CPS
+
+def fact n, k=->(v) {v}
+  if n.zero?
+    k.call(1)
+  else
+    fact(n - 1, ->(v) { k.call(n * v) })
+  end
+end
+```
+
+
+This works, but still suffers from possible stack overflows with large values of 'n'.
+
+Let's add in Tail Call Optimization:
+
+```
+#!/usr/bin/env ruby
+# fact-cps-tco - Factorial Continuation Passing Style: CPS w/TCO turned on
+
+
+RubyVM::InstructionSequence.compile_option = {
+  tailcall_optimization: true,
+    trace_instruction: false
+    }
+
+
+
+def fact n, k=->(v) {v}
+  if n.zero?
+    k.call(1)
+  else
+    fact(n - 1, ->(v) { k.call(n * v) })
+  end
+end
+```
+
+
+## Jump on the trampoline!
+
+Here is our new fact method with 2 driver methods.
+
+1. The fact(n) method  sets up the call to the trampo(k) method.
+2. The trampo(k) keeps driving its 'k'  function until it no longer returns another function.
+
+```
+#!/usr/bin/env ruby
+# trampo.rb - Trampoline method of invoking recursive where you do not TCO enabled
+
+def trampo k
+  while true  do
+    k = k.call
+    return k if !k.respond_to?(:call)
+  end
+
+end
+
+def fact_jmp n, acc
+  if n.zero?
+    acc
+  else
+    ->() { fact_jmp(n - 1, n * acc) }
+  end
+end
+
+# New and improved driver function using the trampoline method
+def fact(n)
+  m = method(:fact_jmp)
+  trampo(->() { m.call(n, 1) })
+end
+
+```
+
+
+Note that we have returned to using a modified version of the APS style
+of fact, here called fact_jmp. It takes a number and a an accumulator.
+But instead of calling itself recursively, it returns a thunk.
+
+### What the frak is a 'thunk'?
+
+Very simply, it is just an anonymous lambda function that takes no parameters.
+The effect of returning a thunk is to delay the computation until it is needed.
+
+You might see these used in some lazy iterators, or other things.
+
+The fact driver method itself wraps a call to the initial fact_jmp method in the first thunk.
+Then it calls the trampo method with this thunk.
+
+The trampo method enters a loop continuing to call the thunk
+until the return from the thunk call is no longer another thunk.
+
+In the fact_jmp method, where we would usually have a call to the the recursive
+method, we just return a new thunk that  wraps the remaing work to do. IOW: a Continuation!
 
 
 
