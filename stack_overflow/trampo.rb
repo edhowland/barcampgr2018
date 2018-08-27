@@ -22,18 +22,3 @@ def fact(n)
   m = method(:fact_jmp)
   trampo(->() { m.call(n, 1) })
 end
-
-def sub n
-  if n.zero?
-    0
-  else
-    ->() { sub(n - 1) }
-  end
-end
-def countr n, acc
-  if n.zero?
-    acc
-  else
-    ->() { countr(n - 1, acc + 1) }
-  end
-end
