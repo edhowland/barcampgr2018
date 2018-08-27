@@ -137,6 +137,9 @@ Each call to * results in another stack frame pushed on the stack.
 
 ## Approach #1: Accumulator Passing Style: APS
 
+Important Note: The following code will cause infinite loops if you supply the
+the fact function with a negative number. It is left to the reader to see why for themself.
+
 One way we can resolve this problem is to ensure that the call to our fact function
 is in tail position, resulting in automatic tail call optimization.
 
@@ -187,13 +190,14 @@ The recipe to do this:
 
 
 ```
+
 ;; fact-cps - Continuation passing style
 (define (fact-cps n k)
   (if (zero? n) (k 1)
-  (fact-cps (sub1 n) (lambda (v) (* n (k v))))))
+  (fact-cps (sub1 n) (lambda (v) (k (* v n))))))
 
-;;; Our driver function
-;;; We pass an initial identity lambda as the first continuation.
+;;; Our driver function w/identity lambda as initial 'k' parameter
+
 (define (fact n)
   (fact-cps n (lambda (x) x)))
 ```
@@ -220,4 +224,40 @@ of lambda applications, do not they all just cause more stack frames to be pushe
 
 Well, maybe. For this reason, we must also ensure that the call to the passed
 in 'k' continuation function is also in the tail position to take advantage of TCO as well.
+
+
+
+
+
+
+
+## Which languages support TCO?
+
+Most, if not all, functional languages support it out of the box.
+
+- Ruby: Not by default, but can be set on by some envronment setting.
+- Javascript - Yes, in ES6, but not before that. Not sure if Bable will help you there.
+- Perl - It appears so. Needs more research, and also Perl5? or Perl6?
+- Python - See the link below.
+- Lua - Yes, appparently
+JVM languages: Java, Clojure, etc. - No.
+- .Net languages: F# : Yes, C#: No. Not sure about others.
+
+
+
+## Links
+
+[Which languages support tail call optimization?](https://www.quora.com/Which-programming-languages-support-tail-recursion-optimization-out-of-the-box)
+
+The above link discusses the  problem nicely. It states that most, if not all, functional languages
+support tail  call elimination/optimization. Exceptions are: Clojure and other
+laanguages based on the JVM. 
+
+[Does Python support TCO?])https://chrispenner.ca/posts/python-tail-recursion(
+
+Apparently not. The author does provide a way to do it in this article.
+
+[Tail calls in Ruby])http://nithinbekal.com/posts/ruby-tco/)
+
+The author also provides a bit on using memoization for factorial as well.
 
