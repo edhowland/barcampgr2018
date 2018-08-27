@@ -171,7 +171,7 @@ The effect of this move is to essentially change a recursive intensivefunction i
 
 
 
-## Approach #2: Continuation Passing Style
+## Approach #2: Continuation Passing Style: CPS
 
 
 Sometimes, it is not easy to use a single numeric value, or even a growing cons cell list
@@ -188,9 +188,19 @@ The recipe to do this:
 4. In any recursive legs of the conditional, call the recursive function (now in the tail position)
 5. For the 'k' parameter, create a new lambda function that performs the work and passes the result to the 'k' continuational passed in.
 
+### The identity function
+
+In the above recipe and in the code below, we have mentioned
+the need for an initial identity function. This is simply a lambda that
+returns its own parameter without performing additional computation.
 
 ```
+;;; The identity lambda
+(lambda (x) x)
+```
 
+
+```
 ;; fact-cps - Continuation passing style
 (define (fact-cps n k)
   (if (zero? n) (k 1)
