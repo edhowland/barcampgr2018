@@ -9,12 +9,18 @@ def trampo k
 
 end
 
-def fact_jmp n
+def fact_jmp n, acc
   if n.zero?
-    1
+    acc
   else
-    ->() { fact_jmp(n * 1) }
+    ->() { fact_jmp(n - 1, n * acc) }
   end
+end
+
+# New and improved driver function using the trampoline method
+def fact(n)
+  m = method(:fact_jmp)
+  trampo(->() { m.call(n, 1) })
 end
 
 def sub n
