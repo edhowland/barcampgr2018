@@ -118,8 +118,81 @@ This example is written in Scheme, likely to be the first language to employ tai
 ;; Factorial naive style
 (define (fact n)
   (if (zero? n) 1
-    (fact (sub1 n))))
+    (* n (fact (sub1 n)))))
+
 ```
 
+The problem above is that at every recursive call, we are leaving work on the table undone.
+When we get to the base case where n is 0, we are left with a large nested set of unfinished expressions.
+
+Consider the factorial of 5:
+
+```
+(fact 5)
+;; results in:
+(* 5 (* 4 (* 3 (* 2 (* 1 1)))))
+```
+
+Each call to * results in another stack frame pushed on the stack.
+
+## Approach #1: Accumulator Passing Style: APS
+
+One way we can resolve this problem is to ensure that the call to our fact function
+is in tail position, resulting in automatic tail call optimization.
+
+The first step is to add an additional parameter to the the function signature.
+This parameter will act as an accumulator.
+
+Next, we create a wrapper function to initialize the whole ball rolling.
+
+```
+
+;; Accumulator passing style : APS
+(define (fact-aps n acc)
+  (if (zero? n) acc
+  (fact-aps (sub1 n) (* n acc))))
+
+;;; Our driver wrapper function: fact
+(define (fact n)
+  (fact-aps n 1))
+
+```
+
+
+Notice we have moved the (* n ..) calculation to the accumulator position.
+This allows the (fact-aps ... ) call to be moved out to the tail position,
+instead of the previous (* n (fact (sub1 n)) ... inner position.
+
+
+In each call to fact-aps, the language runtime, Scheme in this case, will reuse the first
+stack frame created in the fact driver function.
+The effect of this move is to essentially change a recursive intensivefunction into a iterative one.
+
+## Approach #2: Continuation Passing Style: CPS
+
+Sometimes, it is not easy to use a single numeric value, or even a growing cons cell list
+for an an accumulator. We might have to do additional work to compute our final answer.
+
+```
+;; Accumulator passing style : APS
+(define (fact-aps n acc)
+  (if (zero? n) acc
+  (fact-aps (sub1 n) (* n acc))))
+(define (fact n)
+  (fact-aps n 1))
+
+```
+
+;; fact-cps - Continuation passing style
+(define (fact-cps n k)
+  (if (zero? n) (k 1)
+  (fact-cps (sub1 n) (lambda (v) (* n (k v))))))
+
+
+
+(define (fact n)
+  (fact-cps n (lambda (x) x)))
+
+```
 
 
