@@ -20,13 +20,18 @@ The code is in various languages:
 
 
 1. Deep dive into continuations and CPS
-2. ...
+2. How to avoid stack overflows
 
 ### Continuations  and CPS
 
 - [slides](continuations/slides/slide_1.md)
 - [code](continuations)
 
+
+### How to avoid stack overflows
+
+- [Talk])stack_overflow/talk.md)
+[Code](stack_overflow)
 
 
 
