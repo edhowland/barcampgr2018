@@ -25,6 +25,7 @@ Error: Maximum stack limit exceeded.
 - Badly written recursive functions.
 - Runaway mutually recursive errors.
 - Exceedly deep nested data structures.
+- Malformed input data, especially from over the wire sources.
 
 ... and other causes.
 
@@ -390,6 +391,44 @@ Most, if not all, functional languages support it out of the box.
 JVM languages: Java, Clojure, etc. - No.
 - .Net languages: F# : Yes, C#: No. Not sure about others.
 
+## Caveats regarding using TCO
+
+When relying on tail code to be optimized away, you will not get stack traces
+when you are trying to debug your code. Perhaps you can use some
+optional flags for either development or production mode. Be sure to
+turn on TCO, if possible, if using any type of CI testing.
+
+
+## Conclusion
+
+We have seen some ways to avoid potential stack overflows in our code.
+Many of these methods rely on the ability of the various language runtimes
+to support a low-level tachnique called tail call optimization or elimination.
+
+We have seen some ways to rewrite our code to take advantage TCO if it exists.
+
+1. Accumulator Passing Style: APS
+2. Continuation Passing Style: CPS
+
+Both of the above methods rely on adding an additonal parameter
+to our function signature, and either adding a driver function or using
+a default parameter value.
+
+We also saw a method to use in the case our language does now support TCO.
+
+3. The trampoline method.
+
+In summary, although using these techniques to rewrite your recursive functions
+may seem like a bother, in my humble opinion, they do not suffer too much
+from writing a direct style function.
+
+If you are writing library code that someone else is going to rely on, it
+should be your responsiblity to ensure you do not introduce  unexpected behaviour
+whenever your users of your library code deploy to production.
+
+I hope these techniques help you deal with the nasty stack overflow errors.
+
+For further reading, check out the links below.
 
 
 ## Links
@@ -407,4 +446,8 @@ Apparently not. The author does provide a way to do it in this article.
 [Tail calls in Ruby])http://nithinbekal.com/posts/ruby-tco/)
 
 The author also provides a bit on using memoization for factorial as well.
+He also mentions why Guido does not want to support it in C Python.,
+while Matz can go either way.
+
+[Does Scala support tail call optimization?](https://stackoverflow.com/questions/1677419/does-scala-support-tail-recursion-optimization)
 
