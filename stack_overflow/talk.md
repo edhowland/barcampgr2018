@@ -1,3 +1,16 @@
+##### Speaker's Important message:
+
+In my talk on Saturday, Aug. 25th, 2018, I was less than clear
+about using the CPS method identified herein to prevent stack overflows.
+
+If your language implementation does not support tail call optimization,
+then just rewriting your recursive functions to use Continuation Passing Style
+(CPS), will not save you.
+
+However, you can use a form of this with another technique, called 'Trampolining'.
+
+This document corrects this mistake and shows one form of implementing a trampoline to use along with a continuation.
+
 
 # How to avoid Stack Overflow
 
