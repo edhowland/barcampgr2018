@@ -30,8 +30,8 @@ The code is in various languages:
 
 ### How to avoid stack overflows
 
-- [Talk])stack_overflow/talk.md)
-[Code](stack_overflow)
+- [Talk](stack_overflow/talk.md)
+- [Code](stack_overflow)
 
 
 
