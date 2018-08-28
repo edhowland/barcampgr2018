@@ -436,6 +436,9 @@ defn chain4(x, y) {
 ## Links
 
 
+[Tutorial Tuesday #1 - Dr. William Byrd : youtube.com](https://www.youtube.com/watch?v=2GfFlfToBCo&t=5344s)
+
+The original inspiration for this talk. Covers TCO, first class continuations and CPS.
 [Section 3.3 Continuations and 3.4 Continuation Passing Style in Dr. Kent Dybig's book](https://scheme.com/tspl4/further.html#./further:h4)
 [Chapter 5: Control structures](https://scheme.com/tspl4/control.html#g104)
 [Continuation Passing Style: Wikipedia](https://en.wikipedia.org/wiki/Continuation-passing_style)

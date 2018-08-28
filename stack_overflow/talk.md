@@ -582,6 +582,11 @@ support tail  call elimination/optimization. Exceptions are: Clojure and other
 laanguages based on the JVM. 
 [Clojure: Recursive Looping](https://clojure.org/about/functional_programming#_recursive_looping)
 
+[TCO - Chris Frisz - Clojure Conj : youtube.com](https://www.youtube.com/watch?v=RLqqGSthmC0)
+
+Covers tail code optimization in Clojure. But also is a breif intro to topics covered here.
+Tail code optimization, CPS, Thunkification and trampolining.
+
 
 [Does Python support TCO?])https://chrispenner.ca/posts/python-tail-recursion(
 

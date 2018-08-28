@@ -1,0 +1,10 @@
+Here are my slides from Day 2 of Barcamp 2018 on "How to avoid Stack Overflows"
+
+Important note: In my talk I was not clear regarding using CPS: Continuation
+Passing Style for avoiding stack overflows. They require tail call optimization
+in the language runtime like APS: Accumulator Passing Stylle. This is corrected in
+the slides.
+In addition, there are 2 more methods for what to do if your language does not
+support TCO
+https://github.com/edhowland/barcampgr2018/blob/master/stack_overflow/talk.md
+
