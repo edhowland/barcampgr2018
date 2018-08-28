@@ -592,7 +592,7 @@ Tail code optimization, CPS, Thunkification and trampolining.
 
 Apparently not. The author does provide a way to do it in this article.
 
-[Tail calls in Ruby])http://nithinbekal.com/posts/ruby-tco/)
+[Tail calls in Ruby](http://nithinbekal.com/posts/ruby-tco/)
 
 The author also provides a bit on using memoization for factorial as well.
 He also mentions why Guido does not want to support it in C Python.,
