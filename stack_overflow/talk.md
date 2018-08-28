@@ -384,11 +384,13 @@ method, we just return a new thunk that  wraps the remaing work to do. IOW: a Co
 Most, if not all, functional languages support it out of the box.
 
 - Ruby: Not by default, but can be set on by some envronment setting.
-- Javascript - Yes, in ES6, but not before that. Not sure if Bable will help you there.
+- Javascript - Yes, in ES6, but not before that. Not sure if Bable will help you there. (See the Babel TCO plug-in link below)
 - Perl - It appears so. Needs more research, and also Perl5? or Perl6?
 - Python - See the link below.
 - Lua - Yes, appparently
 JVM languages: Java, Clojure, etc. - No.
+- ClojureScript - Yes, if using ES6, or the Babel plug-in
+- Scala - Although a JVM language, the compiler rewrites recursion calls into iterative loops.
 - .Net languages: F# : Yes, C#: No. Not sure about others.
 
 ## Caveats regarding using TCO
@@ -451,3 +453,12 @@ while Matz can go either way.
 
 [Does Scala support tail call optimization?](https://stackoverflow.com/questions/1677419/does-scala-support-tail-recursion-optimization)
 
+Apparently, it rewrites the recursive methods at compile time.
+
+[Bable plug-in for TCO](https://www.npmjs.com/package/babel-plugin-tailcall-optimization(
+
+
+
+
+
+This plug-in also rewrites functions into iterative loops at compile time.
