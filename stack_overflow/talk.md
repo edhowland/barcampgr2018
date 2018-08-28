@@ -401,6 +401,124 @@ optional flags for either development or production mode. Be sure to
 turn on TCO, if possible, if using any type of CI testing.
 
 
+## Approach 4 : Memoize intermediate values
+
+Another tack on this problem might to realize that you do not have to repeat
+calculations you have already done. You can remember past results in  in some form
+of cache. In addition  to reducing stack usage, this technique will probably
+improve performance.
+
+### The Fibonacci sequence.
+
+Let's also return to Ruby for this algorithm, so we can check the time performance.
+
+Here is the direct fib method:
+
+```
+# fib.rb - Direct version of Fibonacci alg.
+
+def fib n
+  if n.zero?
+    1
+  elsif n == 1
+    1
+  else
+    fib(n - 2) + fib(n - 1)
+  end
+end
+```
+
+Here is the driver:
+
+```
+#!/usr/bin/env ruby
+# main-fib.rb - Main driver for fib.rb
+
+require_relative 'fib'
+
+
+x = ARGV.first
+puts fib x.to_i
+
+```
+
+
+Here is the time on a fairly large input value: 34
+
+
+```
+$ ruby -v
+ruby 2.4.1p111 (2017-03-22 revision 58053) [x86_64-darwin14]
+$ time ./main-fib.rb  34
+9227465
+
+real  0m1.901s
+user  0m1.809s
+sys  0m0.043s
+$ 
+
+```
+
+### Remembering previous values
+
+We can modify our code by providing some table of previous values we already have
+calculated.
+
+```
+#!/usr/bin/env ruby
+# fib-memo.rb - Memoized  version of Fibonacci alg.
+
+def fib n, acc={}
+  if acc[n]
+    return acc[n]
+  end
+  if n.zero?
+    1
+  elsif n == 1
+    1
+  else
+    acc[n] = fib(n - 2, acc) + fib(n - 1, acc)
+  end
+end
+
+```
+
+
+First, we provide a reference to a external Ruby hash to store previous values.
+Then, we can return the value if we have already seen it. I.e. it is in the hash.
+Finally, if we get to the point of calculation, we store it with the 'n' parameter
+as the key.
+
+Here is the Main driver:
+
+```
+#!/usr/bin/env ruby
+# main-memo.rb - Main driver for fib-memo.rb
+
+require_relative 'fib-memo'
+
+
+x = ARGV.first
+puts fib x.to_i
+
+
+```
+
+And finally here is the improved timing statistics.
+
+```
+
+$ time ./main-memo.rb  34
+9227465
+
+real  0m0.148s
+user  0m0.080s
+sys  0m0.030s
+$ 
+
+```
+
+
 ## Conclusion
 
 We have seen some ways to avoid potential stack overflows in our code.
@@ -419,6 +537,7 @@ a default parameter value.
 We also saw a method to use in the case our language does now support TCO.
 
 3. The trampoline method.
+4. Memoization of intermediate values.
 
 In summary, although using these techniques to rewrite your recursive functions
 may seem like a bother, in my humble opinion, they do not suffer too much
@@ -462,3 +581,22 @@ Apparently, it rewrites the recursive methods at compile time.
 
 
 This plug-in also rewrites functions into iterative loops at compile time.
+
+
+Here is the Main driver:
+
+```
+#!/usr/bin/env ruby
+# main-fib.rb - Main driver for fib.rb
+
+require_relative 'fib'
+
+
+x = ARGV.first
+puts fib x.to_i
+
+```
+
+
+
+
