@@ -383,14 +383,17 @@ method, we just return a new thunk that  wraps the remaing work to do. IOW: a Co
 
 Most, if not all, functional languages support it out of the box.
 
+For the rest, here some results I discovered:
+
 - Ruby: Not by default, but can be set on by some envronment setting.
 - Javascript - Yes, in ES6, but not before that. Not sure if Bable will help you there. (See the Babel TCO plug-in link below)
 - Perl - It appears so. Needs more research, and also Perl5? or Perl6?
 - Python - See the link below.
 - Lua - Yes, appparently
 JVM languages: Java, Clojure, etc. - No.
+- Clojure : Probably yes with the 'recur' keyword.
 - ClojureScript - Yes, if using ES6, or the Babel plug-in
-- Scala - Although a JVM language, the compiler rewrites recursion calls into iterative loops.
+- Scala - Although a JVM language, the compiler rewrites recursion calls into iterative loops.. Might require a function decorator.
 - .Net languages: F# : Yes, C#: No. Not sure about others.
 
 ## Caveats regarding using TCO
@@ -539,6 +542,11 @@ We also saw a method to use in the case our language does now support TCO.
 3. The trampoline method.
 4. Memoization of intermediate values.
 
+One trick pony I do not cover here is what to do if you are getting external input from
+some less than savory resource. Eithere malformed data or attempts to DOS your server. In these cases,
+you might want to implement a recursion counter and check it agains runaway code. Remember the rules of
+the U.S. Military: Security in depth.
+
 In summary, although using these techniques to rewrite your recursive functions
 may seem like a bother, in my humble opinion, they do not suffer too much
 from writing a direct style function.
@@ -554,11 +562,17 @@ For further reading, check out the links below.
 
 ## Links
 
+[Computer Science: What methods are to avoid stack overflow?](https://softwareengineering.stackexchange.com/questions/194646/what-methods-are-there-to-avoid-a-stack-overflow-in-a-recursive-algorithm)
+
+The top Google hit. Covers most of the stuff I covered above. Links to funny XKCD cartoons on this subject.
+
 [Which languages support tail call optimization?](https://www.quora.com/Which-programming-languages-support-tail-recursion-optimization-out-of-the-box)
 
 The above link discusses the  problem nicely. It states that most, if not all, functional languages
 support tail  call elimination/optimization. Exceptions are: Clojure and other
 laanguages based on the JVM. 
+[Clojure: Recursive Looping](https://clojure.org/about/functional_programming#_recursive_looping)
+
 
 [Does Python support TCO?])https://chrispenner.ca/posts/python-tail-recursion(
 
@@ -578,25 +592,7 @@ Apparently, it rewrites the recursive methods at compile time.
 
 
 
-
-
 This plug-in also rewrites functions into iterative loops at compile time.
 
-
-Here is the Main driver:
-
-```
-#!/usr/bin/env ruby
-# main-fib.rb - Main driver for fib.rb
-
-require_relative 'fib'
-
-
-x = ARGV.first
-puts fib x.to_i
-
-```
-
-
-
+[Memoization :wikipedia.org](https://en.wikipedia.org/wiki/Memoization)
 
