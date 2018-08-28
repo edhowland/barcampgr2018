@@ -526,7 +526,7 @@ $
 
 We have seen some ways to avoid potential stack overflows in our code.
 Many of these methods rely on the ability of the various language runtimes
-to support a low-level tachnique called tail call optimization or elimination.
+to support a low-level technique called tail call optimization or elimination.
 
 We have seen some ways to rewrite our code to take advantage TCO if it exists.
 
@@ -557,6 +557,15 @@ whenever your users of your library code deploy to production.
 
 I hope these techniques help you deal with the nasty stack overflow errors.
 
+I am intrigued by the ability of some compilers to rewrite recursive calls
+into loop iterations. E.g. Scala.
+
+In functional languages, functions should have referential integrity. That is, for the same input
+they should return the same output, regardless how many times they are called. In
+addition, by not having any side-effects,  concurrent threads can rely on consistant behaviour.
+
+Obviously, there is always some trade-off between this pure theory and physical hardware limitations.
+Where compilers can abstract this low-level concerns is always a good thing.
 For further reading, check out the links below.
 
 
@@ -588,7 +597,7 @@ while Matz can go either way.
 
 Apparently, it rewrites the recursive methods at compile time.
 
-[Bable plug-in for TCO](https://www.npmjs.com/package/babel-plugin-tailcall-optimization(
+[Bable plug-in for TCO](https://www.npmjs.com/package/babel-plugin-tailcall-optimization)
 
 
 
