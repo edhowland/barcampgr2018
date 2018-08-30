@@ -24,6 +24,7 @@ The code is in various languages:
 
 ### Continuations  and CPS
 
+- [Full document : talk.md](continuations/talk.md)
 - [slides](continuations/slides/slide_1.md)
 - [code](continuations)
 
